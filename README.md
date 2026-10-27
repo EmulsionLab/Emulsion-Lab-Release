@@ -1,4 +1,4 @@
-# Emulsion (codename: Prism)
+# Emulsion
 
 ![Emulsion Lab](images/screenshot.png)
 
