@@ -1,5 +1,7 @@
 # Emulsion (codename: Prism)
 
+![Emulsion Lab](images/screenshot.png)
+
 A one-time-purchase photo editor ("Photoshop but better", about $10, no subscription). Everything runs locally; photos never leave the device.
 
 | Edition | What it is | Status |
