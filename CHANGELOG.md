@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.7.2
+
+### Fixed
+- **Clicking a LUT in My LUTs no longer scrolls the side panel back to the top** (Lab). Applying a LUT rebuilt the whole panel, so the page jumped to the top each time. The panel now keeps its place, so you can click LUTs one after another.
+
+## 2.7.1
+
+### Fixed
+- **The My LUTs list keeps its scroll position when you apply a LUT** (Lab). Clicking a LUT sent the list back to its first LUT.
+
+## 2.7.0
+
+### New
+- **Highlight rolloff** (Lab and Lite): a new slider in Light & color, under Blacks. Night and stage photos often have coloured lights so bright that one colour channel clips: a red neon sign turns orange and then yellow toward its centre, a blue stage light turns cyan or violet, and the edge of the clipped area shows as a hard band. With Highlight rolloff the brightest lights instead keep their own colour and fade smoothly toward white only near the very top, the way film handles them; a strongly coloured light (a red taillight, a blue stage light) keeps most of its colour, and sensor noise in a clipped light can't break it up into red and white speckles. It also stops Exposure from clipping colours when you brighten a photo: lights roll off softly instead. It works on JPEGs and TIFFs as well as RAW photos, leaves midtones and shadows alone, and can be painted in with the layer's mask like any other Light setting. 100 gives the full effect; lower values blend toward the plain result.
+- Search finds it as "rolloff", "clipped highlights", "blown highlights" or "neon".
+
+### Unchanged
+- Projects, presets, copied edits and imported .xmp files render exactly as before: the slider starts at 0, and at 0 nothing changes.
+
 ## 2.6.1
 
 ### Fixed
