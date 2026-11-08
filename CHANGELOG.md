@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.0.0
+
+### New
+- **Lanczos upscaling with Sharpen after upscale** (Lab and Lite): Image size (Crop tool, Size) enlarges every layer, mask and gradient with Lanczos, and a checkbox (on by default) adds a mild sharpening scaled to how much the photo grows, so enlargements look less soft. Masks are left as they are. Reductions are unchanged.
+- **AI Upscale** (Lab): Image size (Crop tool, Size) can enlarge a photo 2× or 4× with an on-device AI model (Real-ESRGAN), on the GPU when it works, else the CPU, with progress and Cancel. Strength mixes the AI result with the plain (Lanczos) enlargement; other layers, masks and gradients are enlarged with Lanczos; one undo step. On a cropped photo only the part you see is upscaled (with a little margin), so it is faster and the size limit counts what is really made. The model adds detail it has to invent: fine texture can look painted and small text or numbers can change shape, so check the result at 100 % (lower Strength softens it). Nothing leaves the computer.
+- **Enlarging is limited to 150 MP**, with a message that gives the largest size of the same shape that fits; Image size also checks there is memory for the enlargement before it starts.
+
+### Fixed
+- **Cancel on AI Upscale and AI denoise works** (Lab). Clicking Cancel did nothing and the run went on to the end; it now stops within a tile, also while the result is being written out.
+- **AI tools use the right graphics card** (Lab). On a computer with both a graphics card and the processor's own graphics, AI denoise and AI Upscale now ask for the fast card. When the GPU can't be used, they fall back to the processor cleanly instead of hanging, and the progress box says which one is running and why.
+- **Stricter Image size limits** (Lab and Lite). A cropped photo keeps its whole layer, and the limits only looked at the cropped size: a tight crop enlarged a lot could build a layer far over 150 MP, or too large for the browser to draw, without a warning. Now every layer that would be made is checked (the 150 MP limit, the device's limit, the browser's canvas limits and memory), and a tight crop enlarged a lot is refused with the largest size that fits. Normal enlargements, such as a full photo at 200 %, are unchanged.
+
 ## 2.7.2
 
 ### Fixed
