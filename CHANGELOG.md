@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.1.0
+
+### New
+- **New RAW develop, "Accurate"** (Lab): Highlights now roll off instead of ending in a flat white patch. A lower shoulder knee gives the brightest stops real tonal separation, so detail in bright jackets, tables and skies that used to render as blank white now holds tone. Frames with highlight headroom come out slightly darker in their upper tones, which is where that room comes from. Highlight recovery and Highlight roll-off still dial it.
+- **Bright coloured lights stay coloured** (Lab): LED strips, tail lights and stage lights keep their colour instead of washing out to a white blob with a pale halo. A blue light that used to read near-white a little way out from its core now stays clearly blue, and the glow around it is smaller. Check lights at 100 %: a dull violet area near a blue light can be real colour on the car that the old develop washed out.
+- **Update to the new develop** (Lab): Photos opened with the previous develop show "Accurate (3.0)" and keep rendering exactly as before. Use Update to the new develop to move them to the new rendering.
+
 ## 3.0.0
 
 ### New
