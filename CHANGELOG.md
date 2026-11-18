@@ -1,11 +1,70 @@
 # Changelog
 
+## 4.3.0
+
+### Fixed
+- **Nikon Z RAWs that opened as white and coloured stripes** (Lab). A High Efficiency (HE or HE*) NEF from a Nikon Z body other than the Z 9, Z 8, Z f and Z6III (the ZR, the Z5II, the Z50II and later bodies) was decoded as if it were lossless and showed as a mess of lines in the editor. Emulsion now recognises these files from the file itself, whatever the model, and offers **Convert and open** through your Adobe DNG Converter, as for the Z 9's HE files. A Z body's RAW compression mode newer than Emulsion's decoder is sent the same way, so later cameras need no update. Lossless, lossy and uncompressed NEFs, and every D-series file, open directly as before. The Library marks such photos "Can't edit" until converted.
+- If Adobe DNG Converter is missing, the dialog says so and how to get it (or point Emulsion at it). If your copy is older than the camera, the message names the camera and says to update Adobe DNG Converter. Nothing is shown half-decoded.
+- Emulsion Lite is not affected: it shows a RAW's embedded camera JPEG and never decodes the RAW data.
+
+### New
+- **Save preset**. The **+ Save preset** button at the top of the Presets tab keeps this photo's adjustment layers as one of your presets: Light & color, curves, color mixer, color grade, B&W, LUTs, detail, noise, lens, effects, Glow and grain settings, with gradient masks scaled to each photo. Pixels, painted masks, crop and RAW develop settings are never kept. Your presets are listed first, under **My Presets**, with the same one-click apply and live preview as the built-in ones; applying one adds editable adjustment layers in one undo step.
+- Saving under a name you already use warns you and offers **Overwrite** or **Save as "Name (2)"**. The **⋯** button on one of your presets (or right-click) has **Rename…**, **Overwrite with current edits…**, **Export (.json)…** and **Delete…**.
+- Share presets: **Export (.json)** writes a preset file; **Import presets…** now takes Emulsion .json files as well as Lightroom and Camera Raw .xmp, in Lab and Lite. An imported name you already use becomes "Name (2)".
+- Lab keeps each preset as its own JSON file in the app data folder (`presets`), so presets survive updates and reinstalls; Lite keeps them in the browser. Each file carries a schema version, so a later Emulsion can read today's files, and a file from a later Emulsion is refused with a message instead of being misread. Presets saved before 4.3.0 are moved into files on first start.
+- Emulsion Lite saves, applies, edits and shares your own presets; built-in preset layers stay locked in Lite as before.
+
+## 4.2.0
+
+### New
+- **Match these colors: region matching** (Lab). In Match to reference, drag a box on the reference over what you want to match (a car, skin, the sky) and a box on your photo over its counterpart, and only those areas are measured; the result still applies to the whole photo. So a sky in one photo and not the other, or a crowd behind one car, no longer throws the match off. Draw the photo's boxes on its thumbnail in the panel or on the photo itself (**Draw boxes on the photo**). Up to 4 pairs, each with its own colour and a **Weight** slider; Emulsion makes one smooth LUT that serves all of them, blending where they ask different things of the same colours. Tone, Color, Saturation and Skin protection work as before. **Whole image** removes the boxes; with no boxes the match is exactly 4.1's. The preview follows each box change.
+- On the synthetic test set's hard case (the reference has no sky, the photo is a quarter sky), boxing the photo's non-sky part brings the match on that part from ΔE2000 11.8 to 9.9, and boxing the objects in both pictures to 8.0. Pairing sky with sky and objects with objects in differently framed photos: 4.3 for the whole pictures, 2.6 with boxes.
+- **Use for all open photos** shares the reference boxes. Each photo uses its own photo boxes; a photo with none matches the reference boxes to its whole picture.
+
+## 4.1.0
+
+### Improved
+- **Match to reference looks like the reference's grade** (Lab). The match was rebuilt: brightness and contrast now follow the reference's own tone curve (smooth, never crushing blacks or clipping whites), and colour is matched separately in shadows, midtones and highlights, so split toning (teal shadows, warm highlights) carries over instead of averaging into one cast. Blown highlights, near-black areas and big flat areas such as sky no longer pull the result. **Precise** now follows the reference's colours one by one and is smoothed so it never bands or breaks up. On a synthetic test set of four grades it is closer to the true grade than 4.0 (mean ΔE2000 5.91 against 6.03 with Precise, 5.86 against 5.92 without), with the biggest gains in the shadows.
+
+### New
+- **Tone, Color and Saturation** (Lab) replace Strength in Match to reference: take the reference's contrast but keep your colours (Color 0), its colours but keep your contrast (Tone 0), or its casts and toning without its saturation (Saturation 0).
+- **Skin protection** (Lab), on by default with an amount: skin tones keep their hue whatever the grade does to the rest (within a few degrees at 100).
+
+### Compatibility
+- Look layers made with Match to reference in 4.0 are unchanged. A match set up in 4.0 keeps its Strength as Tone, Color and Saturation and gives the same LUT as before, with a **Use the 4.1 match** button to switch.
+
+## 4.0.1
+
+### Fixed
+- **Match to reference matched every open photo** (Lab). Picking a reference, Strength, Precise and the preview were shared by all open photos, so a reference picked for one photo showed on the others too, and Add as Look layer went to whichever photo was showing. Each photo now keeps its own reference, target, Strength, Precise, preview and fit; switching tabs shows that photo's own match (or an empty panel), and closing a photo frees its reference.
+
+### New
+- **Use for all open photos** (Lab). In Match to reference, gives every open photo the same reference in one click. Each photo gets its own fit, made from its own colours (not a copy of one LUT), with the Strength and Precise of the photo you started from. Add as Look layer then adds it to the photo showing.
+
+## 4.0.0
+
+### New
+- **LUT Builder** (Lab). A new LUT tab in the side panel bakes the photo's colour look (Light & color, Curves, Color mixer, Color grade, Black & white, looks and presets, Highlight rolloff) into a 3D LUT of 17, 33 or 65 points, saved as .cube or .3dl or added to My LUTs in one click. The LUT is made by the same code that renders the photo, so it matches the edit closely (with no adjustments it is an exact identity). Effects a LUT cannot hold (sharpening, noise reduction, grain, vignette, Glow, blur, masked adjustments, painted layers) are listed by name, not silently dropped. The window stays responsive while it works, with progress and Cancel.
+- **LUTs for camera log footage** (Lab). Choose what the LUT takes in: sRGB, Rec.709, Panasonic V-Log, Sony S-Log3, Canon Log 3 or Fujifilm F-Log, using each maker's published curve and colour gamut. Log footage is turned into a normal picture (mid grey kept, a soft roll-off to white) and then gets your look; log inputs default to 65 points so shadows do not band. Out: sRGB or Rec.709.
+- **Match to reference** (Lab). In the same tab, pick a reference picture and Emulsion makes a LUT that moves this photo's colours toward it: white balance, contrast and palette. The two need not show the same scene. Strength sets how far; **Precise** also follows a reference's tone curve and single colours, smoothed so it never bands or breaks up. A live preview shows on the photo and as a before/after in the panel; add it as a Look layer, save it as .cube/.3dl, or add it to My LUTs. You can also match another picture instead of the open photo.
+- **Glow** (Lab). Halation grows into a Glow panel with three modes: **Diffusion** (the soft veil a mist filter gives, with Contrast reduction for its lifted blacks), **Halation** (film's red-orange fringe round bright lights, now with a Tint from red to amber) and **Bloom** (the lights' own colour spread wide). Amount, Threshold, Radius, Warmth, Tint, Contrast reduction, and Highlights only or Global. Six built-in looks (Soft Mist, Night Mist 1/4, Night Mist 1/2, Tungsten Halation, Dream Bloom, City Lights), and Save look keeps your own for other photos. The wide glows are worked out on a reduced copy, so they stay quick on a 4-core laptop without a graphics card, and are dithered so faint glows do not band. The preview is at preview size and export is at full quality.
+- **Emulsion Lite** shows the LUT tab and the Glow tile greyed, with a link to Emulsion Lab. Lite keeps Presets › Export look (.cube) for an sRGB LUT.
+
+### Improved
+- **Halation layers from earlier versions open as Glow** in Halation mode and look exactly as they did: same settings, same pixels. Projects and presets need no conversion.
+
 ## 3.1.0
 
 ### New
-- **New RAW develop, "Accurate"** (Lab): Highlights now roll off instead of ending in a flat white patch. A lower shoulder knee gives the brightest stops real tonal separation, so detail in bright jackets, tables and skies that used to render as blank white now holds tone. Frames with highlight headroom come out slightly darker in their upper tones, which is where that room comes from. Highlight recovery and Highlight roll-off still dial it.
-- **Bright coloured lights stay coloured** (Lab): LED strips, tail lights and stage lights keep their colour instead of washing out to a white blob with a pale halo. A blue light that used to read near-white a little way out from its core now stays clearly blue, and the glow around it is smaller. Check lights at 100 %: a dull violet area near a blue light can be real colour on the car that the old develop washed out.
-- **Update to the new develop** (Lab): Photos opened with the previous develop show "Accurate (3.0)" and keep rendering exactly as before. Use Update to the new develop to move them to the new rendering.
+- **Faster Library for culling** (Lab). The grid is virtualized and thumbnails are cached on disk (size-capped), so large folders scroll smoothly and reopen fast. RAW thumbnails read only the embedded preview instead of the whole file.
+- **Sharpness scoring** (Lab). Every photo gets a sharpness score, shown on its badge, so soft or out-of-focus frames stand out. The score works in any light and any contrast, ignores sensor noise, understands motion direction (so panning shots aren't marked soft), and uses a gentle threshold instead of a hard cut-off.
+- **Sharpest per burst** (Lab). Photos are grouped into bursts by capture time, down to fractions of a second, and the sharpest frame in each burst is marked.
+- **Focus filters and sorting** (Lab). Filter the Library to sharp or soft photos with the Sharpness chip, and sort by sharpness or capture time.
+- **Lumix AF point** (Lab). For Lumix photos, the focus point recorded by the camera is read and used.
+- **Emulsion Lite opens camera RAW files as the camera's preview** (Lite). RW2, CR2, NEF, ARW, RAF and DNG files open as the JPEG the camera stored inside them, turned upright, with Adobe RGB converted. It is the camera's own picture (its look, usually about 2 MP), not a develop: a note says so, with a link to Emulsion Lab. CR3 and other formats say they open in Emulsion Lab. Emulsion Lab is unchanged.
+
+### Improved
+- **RAW highlights roll off instead of ending in a flat white patch** (Lab). Bright areas near and over the sensor's limit were all rendered within two or three levels of white, so recovered highlights looked like a white plateau. The Accurate rendering now starts its roll-off lower and keeps separating tones all the way up to white, and a bright colour's strongest channel no longer sits flat on its maximum. Coloured lights (a blue LED strip, an orange indicator) keep their colour in the glow around them instead of blooming into a wide white patch. Photos with highlight headroom come out a little darker in their brightest tones; photos with nothing near the limit are unchanged. RAWs opened from now on use it; photos developed earlier keep their look, and the RAW panel offers Update to the new develop.
 
 ## 3.0.0
 
